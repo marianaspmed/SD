@@ -1,0 +1,177 @@
+//
+// Protocol buffers definition
+//
+syntax = "proto3";
+package pt.tecnico.bicloin.hub.grpc;
+
+message PingRequest {
+}
+
+message PingResponse {
+	string output = 1;
+}
+
+message SysStatusRequest {
+
+}
+
+
+message SysStatusResponse {
+  repeated string output = 1;
+}
+
+message InitRecRequest {
+
+}
+
+message InitRecResponse {
+
+}
+
+message InfoStationRequest {
+  string abrv = 1;
+}
+
+message InfoStationResponse {
+  string name = 1;
+  float latitude = 2;
+  float longitude = 3;
+  int32 docks_capacity = 4;
+  int32 award = 5;
+  int32 available_bikes = 6;
+  int32 bike_up = 7;
+  int32 bike_down = 8;
+}
+
+message LocateStationRequest {
+  float latitude = 1;
+  float longitude = 2;
+  int32 k = 3;
+}
+
+message LocateStationResponse {
+  repeated string stationsIds = 1; //list
+}
+
+message BalanceRequest {
+  string username = 1;
+}
+
+message BalanceResponse {
+  int32 balance = 1;
+}
+
+message SetHasBikeRequest {
+  string username = 1;
+}
+
+message SetHasBikeResponse {
+}
+
+message SetLatRequest {
+  string username = 1;
+  float lat = 2;
+}
+
+message SetLatResponse {
+  string status = 1;
+}
+
+message SetLonRequest {
+  string username = 1;
+  float lon = 2;
+}
+
+message SetLonResponse {
+  string status = 1;
+}
+
+message SetBalanceRequest {
+  int32 value = 1;
+  string username = 2;
+}
+
+message SetBalanceResponse {
+  int32 value = 1;
+  
+}
+
+message GetLatRequest {
+  string username = 1;
+}
+
+message GetLatResponse {
+  float lat = 1;
+}
+
+message GetLonRequest {
+  string username = 1;
+}
+
+message GetLonResponse {
+  float lon = 1;
+}
+
+message GetDistanceRequest {
+  string abrv = 1;
+  float userLat = 2;
+  float userLon = 3;
+}
+
+message GetDistanceResponse {
+  float distance = 1;
+}
+
+message TopUpRequest {
+  string username = 1;
+  int32 amount = 2;
+  string phoneNumber = 3;
+}
+
+message TopUpResponse {
+  int32 balance = 1;
+}
+
+
+message BikeUpRequest {
+  string username = 1;
+  float latitude = 2;
+  float longitude = 3;
+  string abrv = 4;
+}
+
+message BikeUpResponse {
+  string status = 1;
+}
+
+
+message BikeDownRequest {
+  string username = 1;
+  float latitude = 2;
+  float longitude = 3;
+  string abrv = 4;
+}
+
+message BikeDownResponse {
+  string status = 1;
+}
+
+
+service HubService {
+  rpc ping(PingRequest) returns (PingResponse);
+  rpc sys_status(SysStatusRequest) returns (SysStatusResponse);
+  rpc info_station(InfoStationRequest) returns (InfoStationResponse);
+  rpc locate_station(LocateStationRequest) returns (LocateStationResponse); //stream?
+  rpc balance(BalanceRequest) returns (BalanceResponse);
+  rpc top_up(TopUpRequest) returns (TopUpResponse);
+  rpc bike_up(BikeUpRequest) returns (BikeUpResponse);
+  rpc bike_down(BikeDownRequest) returns (BikeDownResponse);
+  rpc set_lat(SetLatRequest) returns (SetLatResponse);
+  rpc set_lon(SetLonRequest) returns (SetLonResponse);
+  rpc get_lat(GetLatRequest) returns (GetLatResponse);
+  rpc get_lon(GetLonRequest) returns (GetLonResponse);
+  rpc get_distance(GetDistanceRequest) returns (GetDistanceResponse);
+  rpc init_rec(InitRecRequest) returns (InitRecResponse);
+  rpc set_balance(SetBalanceRequest) returns (SetBalanceResponse);
+  rpc set_has_bike(SetHasBikeRequest) returns (SetHasBikeResponse);
+}
